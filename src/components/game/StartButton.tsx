@@ -12,7 +12,14 @@ type StartButtonProps = {
 
 export function StartButton({ config, disabled, onStart }: StartButtonProps) {
   return (
-    <button type="button" className="start-button" disabled={disabled} onClick={onStart} aria-disabled={disabled}>
+    <button
+      type="button"
+      className="start-button"
+      disabled={disabled}
+      onClick={onStart}
+      aria-disabled={disabled}
+      aria-label={config.text}
+    >
       <span className="start-button__media" aria-hidden="true">
         <MediaAsset
           src={disabled ? config.disabledMedia : config.activeMedia}
@@ -21,7 +28,8 @@ export function StartButton({ config, disabled, onStart }: StartButtonProps) {
         />
       </span>
 
-      <span className="start-button__text">{config.text}</span>
+      {/* El texto ya viene en la imagen del botón; lo mantenemos solo para lectores de pantalla. */}
+      <span className="visually-hidden">{config.text}</span>
     </button>
   );
 }
