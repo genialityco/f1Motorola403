@@ -7,28 +7,19 @@ type GameHeaderProps = {
   category: Category;
   timer: TimerConfig;
   remainingMilliseconds: number;
-  targetWordsCount: number;
-  foundWordsCount: number;
 };
 
-export function GameHeader({ category, timer, remainingMilliseconds, targetWordsCount, foundWordsCount }: GameHeaderProps) {
+export function GameHeader({ category, timer, remainingMilliseconds }: GameHeaderProps) {
   return (
     <div className="game-header">
-      <section className="game-header__card panel" aria-label={`Categoría seleccionada: ${category.name}`}>
-        <div className="game-header__category-image">
-          <MediaAsset src={category.gameImage} alt={category.gameImageAlt} sizes="96px" objectFit="contain" />
-        </div>
+      {/* Réplica compacta de la card de categoría: banner como fondo (cover) con el
+          nombre superpuesto encima de la imagen, igual que en la pantalla de inicio. */}
+      <section className="game-header__card panel" aria-label={`Categoría: ${category.name}`}>
+        <span className="game-header__card-media" aria-hidden="true">
+          <MediaAsset src={category.gameImage} alt={category.gameImageAlt} sizes="360px" objectFit="cover" />
+        </span>
 
-        <div className="game-header__category-copy">
-          <p className="game-header__eyebrow">Categoría</p>
-          <h2 className="game-header__title">{category.name}</h2>
-          <div className="game-header__meta">
-            <span className="game-header__color-dot" style={{ backgroundColor: category.color }} aria-hidden="true" />
-            <span>
-              {foundWordsCount} de {targetWordsCount} palabras encontradas
-            </span>
-          </div>
-        </div>
+        <span className="game-header__card-name">{category.name}</span>
       </section>
 
       <CountdownTimer timer={timer} remainingMilliseconds={remainingMilliseconds} />

@@ -24,7 +24,8 @@ export function StartButton({ config, disabled, onStart }: StartButtonProps) {
         <MediaAsset
           src={disabled ? config.disabledMedia : config.activeMedia}
           alt={disabled ? config.disabledMediaAlt : config.activeMediaAlt}
-          sizes="(max-width: 720px) 100vw, 320px"
+          sizes="(max-width: 720px) 100vw, 360px"
+          objectFit="contain"
         />
       </span>
 

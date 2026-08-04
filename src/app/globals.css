@@ -95,22 +95,26 @@ button:focus-visible,
   pointer-events: none;
 }
 
-/* Contenedor del contenido: centra vertical/horizontalmente cuando cabe (sin
-   scrollbar en desktop) y solo permite scroll si el contenido no cabe (móvil). */
+/* Contenedor del contenido: llena el alto disponible bajo el header. En desktop
+   el contenido se distribuye con flex y cabe entero (sin scroll); en móvil, si no
+   cabe, `overflow-y:auto` permite desplazarse. */
 .game-main__content {
   z-index: 2;
   overflow-y: auto;
-  padding: 1.25rem;
+  padding: clamp(0.75rem, 2vh, 1.25rem);
   display: flex;
   flex-direction: column;
 }
 
+/* La sección ocupa toda la altura disponible y reparte el espacio a sus hijos
+   (pantalla de inicio o de juego), que a su vez llenan el alto con flex. */
 .game-layout__section {
   width: min(1180px, 100%);
-  /* flex:0 0 auto evita que se comprima; margin:auto lo centra y, si desborda,
-     los márgenes colapsan a 0 y el contenido queda accesible por scroll. */
-  flex: 0 0 auto;
-  margin: auto;
+  margin-inline: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .site-header {
@@ -170,16 +174,24 @@ button:focus-visible,
   font-size: 0.875rem;
 }
 
-.media-asset--contain .media-asset__image,
-.media-asset--contain .media-asset__video {
+/* Same-element selector: MediaAsset pone `media-asset--contain` en el propio
+   <img>/<video>, no en un ancestro, así que el descendiente no haría match. */
+.media-asset__image.media-asset--contain,
+.media-asset__video.media-asset--contain {
   object-fit: contain;
+  object-position: center;
 }
 
+/* Las dos pantallas (inicio/juego) llenan el alto disponible y reparten el
+   espacio con flex, de modo que cada bloque cabe sin scroll en desktop. */
 .screen-frame {
-  width: min(1180px, 100%);
+  width: 100%;
   margin: 0 auto;
-  display: grid;
-  gap: 1.25rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.6rem, 1.6vh, 1.1rem);
 }
 
 .start-screen,
@@ -199,17 +211,18 @@ button:focus-visible,
 .intro-card {
   position: relative;
   overflow: hidden;
-  padding: 1.25rem;
+  flex: 0 0 auto;
+  padding: clamp(0.75rem, 1.6vh, 1.1rem);
   display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
+  grid-template-columns: 84px minmax(0, 1fr);
   gap: 1rem;
   align-items: center;
 }
 
 .intro-card__media {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 84px;
+  height: 84px;
   margin: 0 auto;
 }
 
@@ -235,10 +248,15 @@ button:focus-visible,
   color: #fecaca;
 }
 
+/* Ocupa el alto flexible entre la tarjeta de instrucciones y el botón.
+   grid-auto-rows:1fr reparte el alto entre las dos filas de categorías. */
 .category-selector {
+  flex: 1 1 auto;
+  min-height: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.9rem;
+  grid-auto-rows: 1fr;
+  gap: clamp(0.6rem, 1.4vh, 0.9rem);
 }
 
 .category-card {
@@ -248,7 +266,10 @@ button:focus-visible,
   border-radius: 22px;
   background: transparent;
   color: var(--text);
-  aspect-ratio: 7104 / 1728;
+  /* El alto lo fija la fila flexible (grid-auto-rows:1fr); con `cover` la imagen
+     rellena la casilla sin deformarse aunque cambie la proporción del hueco. */
+  min-height: 0;
+  min-width: 0;
   padding: 0;
   touch-action: manipulation;
   -webkit-user-select: none;
@@ -312,18 +333,24 @@ button:focus-visible,
 }
 
 .start-screen__actions {
-  display: grid;
-  gap: 1rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.6rem, 1.4vh, 1rem);
 }
 
+/* El botón muestra la imagen COMPLETA (object-fit: contain), así que el propio
+   botón es transparente y respeta la proporción de la imagen sin recortarla. */
 .start-button {
+  flex: 0 0 auto;
   position: relative;
-  min-height: 80px;
+  width: min(360px, 100%);
+  height: clamp(58px, 9vh, 92px);
+  margin-inline: auto;
   border: 0;
-  border-radius: 999px;
-  overflow: hidden;
   padding: 0;
-  background: rgba(15, 23, 42, 0.85);
+  background: transparent;
   color: #fff;
   transition: transform 150ms ease, filter 150ms ease, opacity 150ms ease;
 }
@@ -341,77 +368,73 @@ button:focus-visible,
 .start-button__media {
   position: absolute;
   inset: 0;
-  opacity: 0.92;
+  opacity: 1;
 }
 
+/* Franja superior compacta: categoría a la izquierda, cronómetro a la derecha.
+   No debe robar alto al tablero, por eso flex:0 0 auto y altura reducida. */
 .game-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
-  gap: 1rem;
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: clamp(0.6rem, 1.5vw, 1rem);
 }
 
+/* Tarjeta de categoría igual que en la pantalla de inicio: el banner rellena la
+   card (cover) con el nombre superpuesto sobre la imagen. Proporción del banner
+   (4.11:1) para que la imagen se vea completa; el alto define su tamaño. */
 .game-header__card {
   position: relative;
   overflow: hidden;
-  padding: 1rem;
-  min-height: 132px;
-  display: grid;
-  grid-template-columns: 96px minmax(0, 1fr);
-  gap: 1rem;
-  align-items: center;
-}
-
-.game-header__category-image,
-.game-header__timer-media {
-  position: relative;
-  width: 96px;
-  height: 96px;
-  border-radius: 22px;
-  overflow: hidden;
   flex: 0 0 auto;
+  height: clamp(60px, 8vh, 86px);
+  aspect-ratio: 7104 / 1728;
+  border-radius: 18px;
+  padding: 0;
 }
 
-.game-header__category-copy,
-.game-header__timer-copy {
-  display: grid;
-  gap: 0.25rem;
+.game-header__card-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
-.game-header__eyebrow {
-  margin: 0;
-  color: rgba(226, 232, 240, 0.72);
-  font-size: 0.82rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.game-header__card-media,
+.game-header__card-media .media-asset,
+.game-header__card-media .media-asset__image {
+  width: 100%;
+  height: 100%;
 }
 
-.game-header__title {
-  margin: 0;
-  font-weight: 900;
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
+.game-header__card-media .media-asset__image {
+  object-fit: cover;
 }
 
-.game-header__meta {
+/* Nombre en la zona libre izquierda, sobre un degradado que da contraste y se
+   desvanece para no tapar el producto de la derecha (idéntico a category-card). */
+.game-header__card-name {
+  position: absolute;
+  z-index: 2;
+  inset: 0 auto 0 0;
+  width: min(72%, 100%);
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
   align-items: center;
-  font-size: 0.95rem;
-  color: var(--muted);
-}
-
-.game-header__color-dot {
-  width: 0.8rem;
-  height: 0.8rem;
-  border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+  padding: 0 clamp(0.7rem, 1.4vw, 1.1rem);
+  font-weight: 800;
+  font-size: clamp(0.95rem, 1.6vw, 1.35rem);
+  line-height: 1.1;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.78);
+  background: linear-gradient(90deg, rgba(7, 11, 22, 0.72) 0%, rgba(7, 11, 22, 0.34) 55%, rgba(7, 11, 22, 0) 100%);
+  pointer-events: none;
 }
 
 .countdown-timer {
   position: relative;
   overflow: hidden;
-  padding: 1rem;
-  min-height: 132px;
+  padding: clamp(0.35rem, 1vh, 0.55rem) clamp(1rem, 2vw, 1.6rem);
+  min-width: clamp(160px, 18vw, 220px);
 }
 
 .countdown-timer__media {
@@ -433,7 +456,8 @@ button:focus-visible,
   font-variant-numeric: tabular-nums;
   font-weight: 900;
   letter-spacing: 0.04em;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+  line-height: 1;
 }
 
 .countdown-timer__caption {
@@ -445,30 +469,40 @@ button:focus-visible,
 }
 
 .word-grid-panel {
-  padding: 1rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  padding: clamp(0.5rem, 1vw, 0.9rem);
 }
 
+/* El tablero ocupa la mayor parte del ancho y todo el alto restante; el panel
+   de palabras encontradas es una columna estrecha a la derecha. */
 .game-board-layout {
+  flex: 1 1 auto;
+  min-height: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, 300px);
-  gap: 1rem;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) clamp(200px, 22vw, 280px);
+  gap: clamp(0.6rem, 1.4vw, 1rem);
+  align-items: stretch;
 }
 
 .game-board-layout__main {
   min-width: 0;
+  min-height: 0;
+  display: flex;
 }
 
 .found-words-panel {
-  position: sticky;
-  top: 1rem;
-  padding: 1rem;
-  align-self: start;
-  display: grid;
-  gap: 1rem;
+  min-height: 0;
+  padding: clamp(0.6rem, 1.2vw, 0.9rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .found-words-panel__header {
+  flex: 0 0 auto;
   display: grid;
   gap: 0.25rem;
 }
@@ -492,7 +526,11 @@ button:focus-visible,
   padding: 0;
   list-style: none;
   display: grid;
+  align-content: start;
   gap: 0.65rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .found-words-panel__item {
@@ -511,10 +549,16 @@ button:focus-visible,
   line-height: 1.5;
 }
 
+/* El tablero llena el alto/ancho reales del panel (flex:1). Sus dimensiones se
+   miden en WordGrid con getBoundingClientRect + ResizeObserver, así que la física
+   reparte las palabras por todo el área en X e Y y las recalcula al redimensionar. */
 .word-grid {
   position: relative;
-  min-height: clamp(560px, 72vh, 820px);
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 300px;
   overflow: hidden;
+  border-radius: 18px;
   background:
     radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.05), transparent 24%),
     radial-gradient(circle at 85% 72%, rgba(255, 255, 255, 0.04), transparent 20%),
@@ -541,11 +585,11 @@ button:focus-visible,
 }
 
 .result-modal {
-  width: min(720px, 100%);
+  width: min(460px, 100%);
   max-height: calc(100vh - 2rem);
   overflow: auto;
   position: relative;
-  padding: 1.25rem;
+  padding: clamp(1rem, 2vw, 1.4rem);
 }
 
 .result-modal__close {
@@ -562,14 +606,14 @@ button:focus-visible,
 
 .result-modal__content {
   display: grid;
-  gap: 1rem;
+  gap: 0.75rem;
   text-align: center;
-  padding: 0.5rem;
+  padding: 0.25rem;
 }
 
 .result-modal__media {
   position: relative;
-  width: min(240px, 52vw);
+  width: clamp(96px, 22vw, 132px);
   aspect-ratio: 1 / 1;
   margin: 0 auto;
 }
@@ -584,25 +628,26 @@ button:focus-visible,
 
 .result-modal__title {
   margin: 0;
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   line-height: 1.05;
 }
 
 .result-modal__message {
   margin: 0;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.5;
+  font-size: 0.95rem;
 }
 
 .result-modal__stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.6rem;
 }
 
 .result-modal__stat {
-  padding: 0.85rem;
-  border-radius: 18px;
+  padding: 0.65rem 0.6rem;
+  border-radius: 14px;
   background: rgba(15, 23, 42, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -629,11 +674,11 @@ button:focus-visible,
 }
 
 .result-modal__action {
-  min-width: min(100%, 240px);
+  min-width: min(100%, 220px);
   border: 0;
   border-radius: 999px;
-  min-height: 56px;
-  padding: 0.8rem 1.2rem;
+  min-height: 48px;
+  padding: 0.7rem 1.2rem;
   font-weight: 900;
   letter-spacing: 0.04em;
   color: #fff;
@@ -643,12 +688,7 @@ button:focus-visible,
 
 .result-modal__secondary {
   color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.start-screen__actions {
-  display: grid;
-  gap: 1rem;
+  font-size: 0.9rem;
 }
 
 @keyframes shake {
@@ -709,20 +749,37 @@ button:focus-visible,
   }
 }
 
+/* Tablet / pantallas altas y estrechas (≤1024px): el relleno de alto vuelve las
+   tarjetas casi cuadradas y `cover` recorta el banner ancho hasta ocultar la imagen.
+   Aquí las tarjetas recuperan su proporción real (4.11:1) para que la imagen se vea
+   completa y no queden gigantes; la pantalla de inicio se centra verticalmente y,
+   si no cabe, se puede desplazar. */
 @media (max-width: 1024px) {
-  .category-selector {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .game-header {
-    grid-template-columns: 1fr;
-  }
-
   .site-header__logo {
     width: min(220px, 38vw);
   }
+
+  .start-screen {
+    flex: 0 0 auto;
+    margin-block: auto;
+  }
+
+  .start-screen__actions {
+    flex: 0 0 auto;
+  }
+
+  .start-screen .category-selector {
+    flex: 0 0 auto;
+    grid-auto-rows: auto;
+  }
+
+  .start-screen .category-card {
+    aspect-ratio: 7104 / 1728;
+  }
 }
 
+/* Móvil: el contenido deja de comprimirse y puede crecer/desplazarse. Se apilan
+   categorías y tablero, y cada bloque recupera una altura mínima usable. */
 @media (max-width: 720px) {
   .site-header__inner {
     gap: 0.75rem;
@@ -733,44 +790,57 @@ button:focus-visible,
     height: 42px;
   }
 
+  .screen-frame,
+  .start-screen__actions,
+  .category-selector,
+  .game-board-layout {
+    flex: 0 0 auto;
+  }
+
   .intro-card {
     grid-template-columns: 1fr;
     text-align: center;
   }
 
   .intro-card__media {
-    width: 100px;
-    height: 100px;
+    width: 84px;
+    height: 84px;
   }
 
   .game-main__content {
     padding: 1rem;
   }
 
+  /* Una columna: las tarjetas recuperan su proporción de banner al apilarse. */
+  .category-selector {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .category-card {
+    aspect-ratio: 7104 / 1728;
+  }
+
+  .game-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .game-board-layout {
     grid-template-columns: 1fr;
   }
 
-  .found-words-panel {
-    position: static;
+  .game-board-layout__main {
+    min-height: 62vh;
   }
 
   .word-grid {
-    min-height: clamp(620px, 78vh, 900px);
+    min-height: 62vh;
   }
 
-  .category-selector {
-    grid-template-columns: 1fr;
-  }
-
-  .game-header__card {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
-  }
-
-  .game-header__meta {
-    justify-content: center;
+  .found-words-panel__list {
+    flex: 0 0 auto;
+    overflow: visible;
   }
 
   .result-modal__backdrop {
@@ -783,11 +853,3 @@ button:focus-visible,
   }
 }
 
-/* Vista desktop: mostrar todo como si el navegador estuviera al 70% de zoom.
-   `zoom` reajusta el layout (a diferencia de transform: scale), igual que el zoom real.
-   Solo desktop; en tablet/móvil se mantiene al 100%. */
-@media (min-width: 1025px) {
-  :root {
-    zoom: 0.7;
-  }
-}

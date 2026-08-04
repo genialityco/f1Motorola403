@@ -129,13 +129,7 @@ export function GameScreen({
 
   return (
     <section className="screen-frame playing-screen">
-      <GameHeader
-        category={category}
-        timer={config.timer}
-        remainingMilliseconds={remainingMilliseconds}
-        targetWordsCount={targetWords.length}
-        foundWordsCount={foundWordsCount}
-      />
+      <GameHeader category={category} timer={config.timer} remainingMilliseconds={remainingMilliseconds} />
 
       <div className="game-layout__section">
         <div className="game-board-layout">

@@ -37,7 +37,7 @@ type Particle = {
 // (aspect-ratio) a partir de este ancho; aquí solo damos ancho suficiente para que el
 // texto quepa en el ~60% izquierdo (el resto lo ocupa la imagen decorativa de la derecha).
 function estimateWidth(name: string) {
-  return Math.round(clamp((name.length * 8.5 + 30) / 0.6, 190, 320));
+  return Math.round(clamp((name.length * 8 + 26) / 0.62, 150, 250));
 }
 
 function clamp(value: number, min: number, max: number) {
