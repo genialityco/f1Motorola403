@@ -1,0 +1,115 @@
+{
+  "layout": {
+    "header": {
+      "leftImage": "/assets/header/imagotipo.png",
+      "leftImageAlt": "Logo izquierdo",
+      "rightImage": "/assets/header/isotipo.png",
+      "rightImageAlt": "Logo derecho"
+    },
+    "backgroundVideo": "/assets/videos/vbandera loop formula 1.mp4",
+    "backgroundOverlayOpacity": 0.28
+  },
+  "intro": {
+    "image": "/assets/intro/instructions.svg",
+    "imageAlt": "Instrucciones del juego",
+    "text": "Selecciona una categoría y encuentra todas las palabras relacionadas antes de que termine el tiempo.",
+    "cardBackground": "/assets/intro/card-frame.svg"
+  },
+  "startButton": {
+    "text": "Comenzar",
+    "activeMedia": "/assets/buttons/start-active.svg",
+    "activeMediaAlt": "Botón de comenzar activo",
+    "disabledMedia": "/assets/buttons/start-disabled.svg",
+    "disabledMediaAlt": "Botón de comenzar deshabilitado"
+  },
+  "timer": {
+    "durationMilliseconds": 15000,
+    "backgroundMedia": "/assets/timer/timer-background.svg",
+    "backgroundMediaAlt": "Fondo del temporizador"
+  },
+  "result": {
+    "successTitle": "¡Felicidades!",
+    "successMessage": "Encontraste todas las palabras.",
+    "successImage": "/assets/results/trophy.svg",
+    "successImageAlt": "Trofeo de victoria",
+    "timeoutTitle": "¡Estuviste muy cerca!",
+    "timeoutMessage": "Sigue intentándolo, cada palabra encontrada cuenta.",
+    "timeoutImage": "/assets/results/try-again.svg",
+    "timeoutImageAlt": "Imagen motivacional de reintento"
+  },
+  "grid": {
+    "totalWords": 20
+  },
+  "categories": [
+    {
+      "id": "camera",
+      "name": "Cámara",
+      "color": "#E53935",
+      "selectionImage": "/assets/categories/CAMARA.png",
+      "selectionImageAlt": "Cámara seleccionada",
+      "unselectedImage": "/assets/categories/CAMARA.png",
+      "unselectedImageAlt": "Cámara no seleccionada",
+      "gameImage": "/assets/categories/CAMARA.png",
+      "gameImageAlt": "Cámara en la partida",
+      "panelBackground": "/assets/categories/CAMARA.png"
+    },
+    {
+      "id": "battery",
+      "name": "Batería",
+      "color": "#57DDE6",
+      "selectionImage": "/assets/categories/BATERIA.png",
+      "selectionImageAlt": "Batería seleccionada",
+      "unselectedImage": "/assets/categories/BATERIA.png",
+      "unselectedImageAlt": "Batería no seleccionada",
+      "gameImage": "/assets/categories/BATERIA.png",
+      "gameImageAlt": "Batería en la partida",
+      "panelBackground": "/assets/categories/BATERIA.png"
+    },
+    {
+      "id": "storage",
+      "name": "Almacenamiento",
+      "color": "#8A5CFF",
+      "selectionImage": "/assets/categories/ALMACENAMIENTO.png",
+      "selectionImageAlt": "Almacenamiento seleccionado",
+      "unselectedImage": "/assets/categories/ALMACENAMIENTO.png",
+      "unselectedImageAlt": "Almacenamiento no seleccionado",
+      "gameImage": "/assets/categories/ALMACENAMIENTO.png",
+      "gameImageAlt": "Almacenamiento en la partida",
+      "panelBackground": "/assets/categories/ALMACENAMIENTO.png"
+    },
+    {
+      "id": "design",
+      "name": "Diseño",
+      "color": "#FF9A3D",
+      "selectionImage": "/assets/categories/DISEÑO.png",
+      "selectionImageAlt": "Diseño seleccionado",
+      "unselectedImage": "/assets/categories/DISEÑO.png",
+      "unselectedImageAlt": "Diseño no seleccionado",
+      "gameImage": "/assets/categories/DISEÑO.png",
+      "gameImageAlt": "Diseño en la partida",
+      "panelBackground": "/assets/categories/DISEÑO.png"
+    }
+  ],
+  "words": [
+    { "id": "word-1", "name": "Retrato", "categoryId": "camera" },
+    { "id": "word-2", "name": "Zoom", "categoryId": "camera" },
+    { "id": "word-3", "name": "Enfoque", "categoryId": "camera" },
+    { "id": "word-4", "name": "Selfie", "categoryId": "camera" },
+    { "id": "word-5", "name": "Video", "categoryId": "camera" },
+    { "id": "word-6", "name": "Resistencia", "categoryId": "battery" },
+    { "id": "word-7", "name": "Carga rápida", "categoryId": "battery" },
+    { "id": "word-8", "name": "Duración", "categoryId": "battery" },
+    { "id": "word-9", "name": "Energía", "categoryId": "battery" },
+    { "id": "word-10", "name": "Rendimiento", "categoryId": "battery" },
+    { "id": "word-11", "name": "Memoria", "categoryId": "storage" },
+    { "id": "word-12", "name": "Archivos", "categoryId": "storage" },
+    { "id": "word-13", "name": "Capacidad", "categoryId": "storage" },
+    { "id": "word-14", "name": "Aplicaciones", "categoryId": "storage" },
+    { "id": "word-15", "name": "Copia seguridad", "categoryId": "storage" },
+    { "id": "word-16", "name": "Elegancia", "categoryId": "design" },
+    { "id": "word-17", "name": "Textura", "categoryId": "design" },
+    { "id": "word-18", "name": "Estilo", "categoryId": "design" },
+    { "id": "word-19", "name": "Color", "categoryId": "design" },
+    { "id": "word-20", "name": "Ergonomía", "categoryId": "design" }
+  ]
+}
