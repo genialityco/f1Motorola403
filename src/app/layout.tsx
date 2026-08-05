@@ -5,7 +5,10 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Sopa de Palabras',
-  description: 'Juego interactivo de categorías y palabras con tiempo limitado.'
+  description: 'Juego interactivo de categorías y palabras con tiempo limitado.',
+  icons: {
+    icon: '/assets/header/motorola.png'
+  }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
