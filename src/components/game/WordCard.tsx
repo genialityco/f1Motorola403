@@ -50,7 +50,7 @@ export function WordCard({ word, found, wrong, categoryColor, foundImage, width,
           'relative flex h-full w-full items-center overflow-hidden rounded-[18px] border text-[0.95rem] leading-tight text-white transition-transform duration-200 group-hover:scale-[1.05] group-active:scale-95',
           found ? 'justify-start pl-3 pr-2' : 'justify-center px-3',
           wrong
-            ? 'animate-[shake_0.32s_ease-in-out] border-red-400/80 bg-gradient-to-b from-red-900/90 to-red-950/95'
+            ? 'animate-[shake_0.32s_ease-in-out] border-2 border-red-500 bg-black'
             : found
               ? 'border-white/20 bg-slate-900'
               : 'border-white/10 bg-gradient-to-b from-slate-900/90 to-slate-800/90'
@@ -74,7 +74,16 @@ export function WordCard({ word, found, wrong, categoryColor, foundImage, width,
           </>
         ) : null}
 
-        <span className="relative z-[1] whitespace-nowrap drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]">{word.name}</span>
+        {wrong ? (
+          <span
+            aria-hidden="true"
+            className="relative z-[1] text-[1.4rem] font-black leading-none text-red-500 drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]"
+          >
+            ✕
+          </span>
+        ) : (
+          <span className="relative z-[1] whitespace-nowrap drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]">{word.name}</span>
+        )}
       </span>
     </button>
   );

@@ -853,3 +853,40 @@ button:focus-visible,
   }
 }
 
+/* En celulares muy angostos volvemos a poner categoría y cronómetro en la misma
+   fila (2 columnas) para ahorrar alto vertical, como en tablet/escritorio. */
+@media (max-width: 440px) {
+  .game-header {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  /* El alto lo define el ancho vía aspect-ratio al ocupar media fila. */
+  .game-header__card {
+    flex: 1 1 0;
+    min-width: 0;
+    height: auto;
+  }
+
+  .game-header__card-name {
+    font-size: clamp(0.75rem, 3.6vw, 1rem);
+    padding: 0 0.6rem;
+  }
+
+  .countdown-timer {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .countdown-timer__caption {
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+  }
+
+  .countdown-timer__value {
+    font-size: clamp(1.2rem, 6.5vw, 1.7rem);
+  }
+}
+

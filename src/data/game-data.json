@@ -34,7 +34,7 @@
     "successImageAlt": "Trofeo de victoria",
     "timeoutTitle": "¡Estuviste muy cerca!",
     "timeoutMessage": "Sigue intentándolo, cada palabra encontrada cuenta.",
-    "timeoutImage": "/assets/results/try-again.svg",
+    "timeoutImage": "/assets/results/reinicio.png",
     "timeoutImageAlt": "Imagen motivacional de reintento"
   },
   "grid": {
