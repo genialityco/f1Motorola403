@@ -7,6 +7,7 @@ import { useGameState } from '../../hooks/useGameState';
 import type { GameData, ResultType } from '../../types/game';
 import { getCategoryWords } from '../../utils/getCategoryWords';
 
+import { BackgroundMusic } from '../layout/BackgroundMusic';
 import { GameLayout } from '../layout/GameLayout';
 import { GameScreen } from './GameScreen';
 import { ResultModal } from './ResultModal';
@@ -61,6 +62,8 @@ export function Game() {
 
   return (
     <GameLayout config={config}>
+      <BackgroundMusic src="/assets/videos/F1_Opening_Titles.mp3.mpeg" />
+
       {screen === 'start' ? (
         <StartScreen
           intro={config.intro}
