@@ -9,8 +9,8 @@ import { WordCard } from './WordCard';
 
 const EDGE_PADDING = 12; // margen contra los bordes del tablero
 const COLLISION_GAP = 4; // separación mínima visible entre tarjetas
-const MIN_SPEED = 42; // px/s
-const MAX_SPEED = 72; // px/s — velocidad media, legible
+const MIN_SPEED = 63; // px/s
+const MAX_SPEED = 108; // px/s — velocidad media, legible
 const MAX_DELTA = 0.032; // segundos: evita saltos grandes si la pestaña se congela
 
 type WordGridProps = {

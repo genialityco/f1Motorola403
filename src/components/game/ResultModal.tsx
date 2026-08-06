@@ -29,6 +29,7 @@ export function ResultModal({
 }: ResultModalProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const actionRef = useRef<HTMLButtonElement | null>(null);
+  const timeoutAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const isSuccess = resultType === 'success';
   const image = isSuccess ? resultConfig.successImage : resultConfig.timeoutImage;
@@ -49,6 +50,24 @@ export function ResultModal({
   useEffect(() => {
     actionRef.current?.focus();
   }, []);
+
+  // Cuando se acaba el tiempo y aparece el modal, reproduce el sonido "hello moto".
+  useEffect(() => {
+    if (isSuccess) {
+      return;
+    }
+
+    const audio = timeoutAudioRef.current;
+
+    if (!audio) {
+      return;
+    }
+
+    audio.currentTime = 0;
+    void audio.play().catch(() => {
+      // El navegador puede bloquear la reproducción; se ignora silenciosamente.
+    });
+  }, [isSuccess]);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Escape') {
@@ -80,6 +99,9 @@ export function ResultModal({
 
   return (
     <div className="result-modal__backdrop" role="presentation">
+      {!isSuccess ? (
+        <audio ref={timeoutAudioRef} src="/assets/videos/hello_moto.mpeg" preload="auto" aria-hidden="true" />
+      ) : null}
       <div
         className="result-modal panel"
         role="dialog"

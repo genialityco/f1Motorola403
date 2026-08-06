@@ -10,7 +10,7 @@
     "backgroundOverlayOpacity": 0.28
   },
   "intro": {
-    "image": "/assets/intro/instructions.svg",
+    "image": "/assets/intro/INSTRUCCIONES.png",
     "imageAlt": "Instrucciones del juego",
     "text": "Selecciona una categoría y encuentra todas las palabras relacionadas antes de que termine el tiempo.",
     "cardBackground": "/assets/intro/card-frame.svg"
@@ -23,7 +23,7 @@
     "disabledMediaAlt": "Botón de comenzar deshabilitado"
   },
   "timer": {
-    "durationMilliseconds": 15000,
+    "durationMilliseconds": 10000,
     "backgroundMedia": "/assets/timer/timer-background.svg",
     "backgroundMediaAlt": "Fondo del temporizador"
   },
@@ -96,7 +96,7 @@
     { "id": "word-3", "name": "Enfoque", "categoryId": "camera" },
     { "id": "word-4", "name": "Selfie", "categoryId": "camera" },
     { "id": "word-5", "name": "Video", "categoryId": "camera" },
-    { "id": "word-6", "name": "Resistencia", "categoryId": "battery" },
+    { "id": "word-6", "name": "Autonomica", "categoryId": "battery" },
     { "id": "word-7", "name": "Carga rápida", "categoryId": "battery" },
     { "id": "word-8", "name": "Duración", "categoryId": "battery" },
     { "id": "word-9", "name": "Energía", "categoryId": "battery" },
